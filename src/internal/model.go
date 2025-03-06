@@ -10,25 +10,34 @@ import (
 	"github.com/barasher/go-exiftool"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+
 	"github.com/charmbracelet/lipgloss"
 	variable "github.com/yorukot/superfile/src/config"
 	stringfunction "github.com/yorukot/superfile/src/pkg/string_function"
 )
 
-var LastTimeCursorMove = [2]int{int(time.Now().UnixMicro()), 0}
-var ListeningMessage = true
+var (
+	LastTimeCursorMove = [2]int{int(time.Now().UnixMicro()), 0}
+	ListeningMessage   = true
+)
 
-var firstUse = false
-var hasTrash = true
+var (
+	firstUse = false
+	hasTrash = true
+)
 
-var theme ThemeType
-var Config ConfigType
-var hotkeys HotkeysType
+var (
+	theme   ThemeType
+	Config  ConfigType
+	hotkeys HotkeysType
+)
 
 var et *exiftool.Exiftool
 
-var channel = make(chan channelMessage, 1000)
-var progressBarLastRenderTime time.Time = time.Now()
+var (
+	channel                             = make(chan channelMessage, 1000)
+	progressBarLastRenderTime time.Time = time.Now()
+)
 
 // Initialize and return model with default configs
 func InitialModel(dir string, firstUseCheck bool, hasTrashCheck bool) model {
@@ -196,7 +205,6 @@ func (m *model) setHelpMenuSize() {
 // Identify the current state of the application m and properly handle the
 // msg keybind pressed
 func (m *model) handleKeyInput(msg tea.KeyMsg, cmd tea.Cmd) tea.Cmd {
-
 	slog.Debug("model.handleKeyInput", "msg", msg, "typestr", msg.Type.String(),
 		"runes", msg.Runes, "type", int(msg.Type), "paste", msg.Paste,
 		"alt", msg.Alt)
